@@ -12,7 +12,7 @@ public class oths_ghoul_investigators {
                 bad = true;
             }
         }
-        System.out.println(bad ? "fight": "runaway");
+        System.out.println(bad ? "fight": "run away");
     } 
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())

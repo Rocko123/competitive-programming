@@ -1,34 +1,36 @@
 import java.util.*;
 import java.io.*;
-public class bobs_portal_travel {
+public class toospooky4me {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        // binary lifting way
-    	int n = readInt();
-        long k = readLong();
-        int[][] bl_table = new int[60][n+1]; // switch dimensions improves cache hit
-
+        int n = readInt(), l = readInt(), S = readInt();
+        // dsa not working
+        /*
+        2 100 1
+        20 59 1
+        69 70 1
+        WA: 49
+         */
+        List<pair> houses = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
-            bl_table[0][i] = readInt();
+            int a = readInt(), b = readInt(), s = readInt();
+            houses.add(new pair(a, s)); houses.add(new pair(b+1, -s));
+            // always stop it at 1 more, then when you subtract the houses is correct
         }
-        for (int i = 1; i < 60; i++) { // every power of 2
-            for (int j = 1; j <= n; j++) { // every node
-                bl_table[i][j] = bl_table[i-1][bl_table[i-1][j]];
-                // 2^(i-1) + 2^(i-1)
-            }
+        Collections.sort(houses);
+        int sum = 0, spook = 0;
+        for (int i = 0; i < houses.size()-1; i++) {
+            sum += houses.get(i).val;
+            if (sum >= S) spook += houses.get(i+1).pos - houses.get(i).pos;
         }
-        // for (int i = 1; i <= n; i++) System.out.println(Arrays.toString(bl_table[i]));
-
-        int cur = 1;
-        for (int i = 59; i >= 0; i--) {
-            if (((k >> i) & 1) != 0) { // bit is true take that many steps from current
-                // System.out.println(i);
-                cur = bl_table[i][cur];
-            }
-        }
-        System.out.println(cur);
+        System.out.println(l-spook);
     }
+    static class pair implements Comparable<pair>{
+		int pos, val;
+		pair(int p, int v){ pos = p; val = v; }
+		public int compareTo(pair x) { return Integer.compare(pos, x.pos); }
+	}
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());
@@ -42,7 +44,7 @@ public class bobs_portal_travel {
     }
     static double readDouble () throws IOException {
         return Double.parseDouble(next());
-    }
+    }   
     static char readCharacter () throws IOException {
         return next().charAt(0);
     }  

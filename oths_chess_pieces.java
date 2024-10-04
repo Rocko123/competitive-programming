@@ -1,18 +1,21 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class oths_chess_pieces {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
-            }
+        String s = readLine();
+        if (s.equals("queen")) {
+            System.out.println(9);
+        } else if (s.equals("rook")) {
+            System.out.println(5);
+        } else if (s.equals("bishop") || s.equals("knight")) {
+            System.out.println(3);
+        } else if (s.equals("pawn")) {
+            System.out.println(1);
+        } else {
+            System.out.println("priceless");
         }
-        System.out.println(bad ? "fight": "runaway");
     } 
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())

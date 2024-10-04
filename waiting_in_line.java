@@ -1,19 +1,24 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class waiting_in_line {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
+    static ArrayList<Integer> small = new ArrayList<>();
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
+        int n = readInt();
+        Map<Integer, Integer> line = new HashMap<>();
+        for (int i = 1; i <= n; i++) line.put(readInt(), i);
+        
+        int q = readInt();
+        for (; q > 0; q--) {
+            int x = readInt(), y = readInt();
+            if (line.get(x) < line.get(y)) {
+                System.out.println(x);
+            } else {
+                System.out.println(y);
             }
         }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+    }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

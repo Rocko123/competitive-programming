@@ -4,9 +4,8 @@ public class cco_fundraising_problem {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static long dp[][];
-    static int hate[], val[];
+    static int hate[], val[], edge[], head[], nxt[];
     static boolean vis[];
-    static List<Integer> radj[];
     static int root;
     static long ans;
     public static void main(String[] args) throws IOException{
@@ -15,16 +14,16 @@ public class cco_fundraising_problem {
         // break the edge in the cycle make this node the root, results in a DAG
         // use the reversed graph and the root to run dfs with dp
 
-        dp = new long[n+1][2];
-        hate = new int[n+1]; val = new int[n+1];
+        dp = new long[2][n+1];
+        hate = new int[n+1]; val = new int[n+1]; edge = new int[n+1]; head = new int[n+1]; nxt = new int[n+1];
         vis = new boolean[n+1];
-        radj = new ArrayList[n+1];
 
-        for (int i = 1; i <= n; i++) radj[i] = new ArrayList<>();
+        int idx = 0;
+        Arrays.fill(head, -1);
         for (int i = 1; i <= n; i++) {
             int v = readInt(), h = readInt();
             hate[i] = h; val[i] = v;
-            radj[h].add(i);
+            edge[idx] = i; nxt[idx] = head[h]; head[h] = idx++; 
         }
 
         for (int i = 1; i <= n; i++) {
@@ -35,21 +34,23 @@ public class cco_fundraising_problem {
             ans += Math.max(dfs(root, 0), dfs(root, 1));
         }
         System.out.println(ans);
+        // try adj list optimization
     }
     static long dfs (int cur, int take) { // current node, if we selected its hate
         if (cur == hate[root] && take > 0) { // broken edge can't take its hate
-            dp[cur][0] = 0; dp[cur][1] = -Long.MAX_VALUE/2;
+            dp[0][cur] = 0; dp[1][cur] = -Long.MAX_VALUE/2;
         } else {
-            dp[cur][0] = 0; dp[cur][1] = val[cur];
+            dp[0][cur] = 0; dp[1][cur] = val[cur];
         }
         vis[cur] = true;
-        for (int i: radj[cur]) {
+        for (int j = head[cur]; j != -1; j = nxt[j]) {
+            int i = edge[j];
             if (i == root) continue;
             dfs(i, take);
-            dp[cur][0] += Math.max(dp[i][0], dp[i][1]);
-            dp[cur][1] += dp[i][0];
+            dp[0][cur] += Math.max(dp[0][i], dp[1][i]);
+            dp[1][cur] += dp[0][i];
         }
-        return dp[cur][take];
+        return dp[take][cur];
     }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())

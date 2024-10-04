@@ -1,19 +1,24 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class split_array {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
+    static int n;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
+        n = readInt();
+        long[] a = new long[n+1];
+        for (int i = 1; i <= n; i++) {
+            a[i] = a[i-1] + readInt();
+        }
+        long ans = Long.MAX_VALUE;
+        for (int i = 1; i <= n; i++) {
+            if (Math.abs(a[n]-2*a[i]) < ans) {
+                ans = Math.abs(a[n]-2*a[i]);
             }
         }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+        System.out.println(ans);
+    }
+
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

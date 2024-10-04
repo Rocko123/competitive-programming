@@ -1,19 +1,25 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class ccc_pennies_in_ring {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
+        // gauss circle problem
+        // idea: from 0 to r, find the difference of
+        // r - floor(sqrt (r^2 - y^2))
+
+        while (true) {
+            int r = readInt();
+            if (r == 0) System.exit(0);
+            int remove = 0;
+            for (int i = 1; i <= r; i++) {
+                // System.out.println(r-Math.floor(Math.sqrt(r*r-i*i)));
+                remove += r-Math.floor(Math.sqrt(r*r-i*i));
             }
+            System.out.println((2*r+1) * (2*r+1)-4 * remove); // can also use pick theorem here
         }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+
+    }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

@@ -1,18 +1,18 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class ccc_hat_circle {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
-            }
+        int n = readInt();
+        int[] table = new int[2*n];
+        for (int i = 0; i < n; i++) table[i] = table[i+n] = readInt();
+
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            if (table[i] == table[i+n/2]) ans++;
         }
-        System.out.println(bad ? "fight": "runaway");
+        System.out.println(ans);
     } 
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())

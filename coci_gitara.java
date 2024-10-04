@@ -1,19 +1,29 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class coci_gitara {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
+        // montonic stack
+
+        int n = readInt(), p = readInt(); // need P?
+        Stack<Integer>[] str = new Stack[7];
+        for (int i = 1; i <= 6; i++) str[i] = new Stack<>();
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            int s = readInt(), f = readInt(), moves = 0;
+            while (!str[s].isEmpty() && str[s].peek() > f) {
+                moves++;
+                str[s].pop();
             }
+            if (str[s].isEmpty() || str[s].peek() < f) {
+                str[s].add(f);
+                moves++;
+            }
+            ans += moves;
         }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+        System.out.println(ans);
+    }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

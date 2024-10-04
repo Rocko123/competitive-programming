@@ -1,18 +1,12 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class educational_dp_matching {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
-            }
-        }
-        System.out.println(bad ? "fight": "runaway");
+        // bitmask dp
+
+        
     } 
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())

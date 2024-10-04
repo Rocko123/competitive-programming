@@ -1,33 +1,34 @@
 import java.util.*;
 import java.io.*;
-public class bobs_portal_travel {
+public class usaco_cow_frisbee {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        // binary lifting way
-    	int n = readInt();
-        long k = readLong();
-        int[][] bl_table = new int[60][n+1]; // switch dimensions improves cache hit
+        // monotonic stack
+        int n = readInt();
+        int[] cows = new int[n+1];
+        Stack<pair> up = new Stack<>(), down = new Stack<>();
+        for (int i = 1; i <= n; i++) cows[i] = readInt();
 
+        long ans = 0;
+        // do it forwards and backwards
+        for (int i = n; i >= 1; i--) {
+            while (!up.isEmpty() && up.peek().val <= cows[i]) up.pop();
+            ans += up.isEmpty() ? 0: up.peek().idx-i+1;
+            up.add(new pair(i, cows[i]));
+        }
         for (int i = 1; i <= n; i++) {
-            bl_table[0][i] = readInt();
+            while (!down.isEmpty() && down.peek().val <= cows[i]) down.pop();
+            ans += down.isEmpty() ? 0: Math.abs(down.peek().idx-i)+1;
+            down.add(new pair(i, cows[i]));
         }
-        for (int i = 1; i < 60; i++) { // every power of 2
-            for (int j = 1; j <= n; j++) { // every node
-                bl_table[i][j] = bl_table[i-1][bl_table[i-1][j]];
-                // 2^(i-1) + 2^(i-1)
-            }
+        System.out.println(ans);
+    }
+    static class pair {
+        int idx, val;
+        pair (int idx0, int val0) {
+            idx = idx0; val = val0;
         }
-        // for (int i = 1; i <= n; i++) System.out.println(Arrays.toString(bl_table[i]));
-
-        int cur = 1;
-        for (int i = 59; i >= 0; i--) {
-            if (((k >> i) & 1) != 0) { // bit is true take that many steps from current
-                // System.out.println(i);
-                cur = bl_table[i][cur];
-            }
-        }
-        System.out.println(cur);
     }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
@@ -42,7 +43,7 @@ public class bobs_portal_travel {
     }
     static double readDouble () throws IOException {
         return Double.parseDouble(next());
-    }
+    }   
     static char readCharacter () throws IOException {
         return next().charAt(0);
     }  

@@ -1,19 +1,20 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class sac_averaging_averages {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
-            }
+        int n = readInt(), q = readInt();
+        int[] grades = new int[n+1];
+        for (int i = 1; i <= n; i++) {
+            grades[i] = grades[i-1] + readInt();
         }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+        
+        for (; q > 0; q--) {
+            int l = readInt(), r = readInt();
+            System.out.println((grades[r]-grades[l-1])/(r-l+1));
+        }
+    }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

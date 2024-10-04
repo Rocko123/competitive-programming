@@ -9,59 +9,25 @@ public class ccc_swipe {
         for (int i = 0; i < n; i++) a[i] = readInt();
         for (int i = 0; i < n; i++) b[i] = readInt();
 
-        ArrayList<int[]> left = new ArrayList<>(), right = new ArrayList<>(), seg = new ArrayList<>();
-
-        // group consecutive segments in B together
-        int L = 0, R = 0;
-        for (int i = 0; i < n; i++) {
-            if (b[L] != b[R]) {
-                seg.add(new int[] {L, R-1});
-                L = R;
-            }
-            if (i == n-1) {
-                seg.add(new int[] {L, i});
-                L = R;
-            }
-            R++;
-        }
-
-        // find a target in A
-        int index = 0;
-        for (int i = 0; i < seg.size(); i++) {
-            boolean bad = true;
-            for (int j = index; j < n; j++) {
-                if (a[j] == b[seg.get(i)[0]]) {
-                    if (j > seg.get(i)[0]) { // perform left swipe from j
-                        left.add(new int[] {seg.get(i)[0], j});
-                    }
-                    if (j < seg.get(i)[1]) { // perform right swipe from j
-                        right.add(new int[] {j, seg.get(i)[1]});
-                    }
-                    index = j;
-                    bad = false;
-                    break;
+        ArrayList<int[]> l = new ArrayList<>(), r = new ArrayList<>();
+        int i = 0, j = 0;
+        for (; i < n && j < n;) {
+            if (a[i] != b[j]) {
+                while (i < n && a[i] != b[j]) i++;
+                if (i == n) {
+                    System.out.println("NO");
+                    System.exit(0);
                 }
-            }
-            if (bad) {
-                System.out.println("NO");
-                System.exit(0);
+                if (j < i) l.add(new int[] {j, i});
+            } else {
+                while (j < n && a[i] == b[j]) j++; // increments j when !=
+                if (i < j-1) r.add(new int[] {i, j-1});
             }
         }
-        //printArr(left);
-        //printArr(right);
         System.out.println("YES");
-        System.out.println(left.size() + right.size());
-        for (int i = 0; i < left.size(); i++) {
-            System.out.println("L " + left.get(i)[0] + " " + left.get(i)[1]);
-        }
-        for (int i = right.size()-1; i >= 0; i--) {
-            System.out.println("R " + right.get(i)[0] + " " + right.get(i)[1]);
-        }
-    }
-    static void printArr (ArrayList<int[]> arr) {
-        for (int[] i: arr) {
-            System.out.println(Arrays.toString(i));
-        }
+        System.out.println(l.size() + r.size());
+        for (int k = 0; k < l.size(); k++) System.out.println("L " + l.get(k)[0] + " " + l.get(k)[1]);
+        for (int k = r.size()-1; k >= 0; k--) System.out.println("R " + r.get(k)[0] + " " + r.get(k)[1]);
     }
     static String next() throws IOException {
         while (st == null || !st.hasMoreTokens()) {

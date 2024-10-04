@@ -1,19 +1,11 @@
 import java.util.*;
 import java.io.*;
-public class oths_ghoul_investigators {
+public class usaco_rectangular_pasture {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
-        int k = readInt(), n = readInt();
-        boolean bad = false;
-        for (; n > 0; n--) {
-            int speed = readInt();
-            if (speed >= k) {
-                bad = true;
-            }
-        }
-        System.out.println(bad ? "fight": "runaway");
-    } 
+        // coordinate compression
+    }
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());

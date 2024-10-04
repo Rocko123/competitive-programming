@@ -5,7 +5,7 @@ public class reader_template {
     static StringTokenizer st;
     public static void main(String[] args) throws IOException{
 
-    }
+    } 
     static String next () throws IOException {
         while (st == null || ! st.hasMoreTokens())
             st = new StringTokenizer(br.readLine().trim());
